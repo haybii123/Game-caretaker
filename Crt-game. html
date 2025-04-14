@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Slot Game</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background: #fce4ec;
+      margin: 0;
+      padding: 0;
+    }
+    h1 { margin-top: 30px; color: #c2185b; }
+    .slot-container {
+      margin: 50px auto;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      font-size: 80px;
+    }
+    .slot {
+      width: 80px;
+      height: 80px;
+      background: white;
+      border: 3px solid #880e4f;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      background: #c2185b;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    #result {
+      margin-top: 30px;
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Game Slot Lucu</h1>
+
+<div class="slot-container">
+  <div class="slot" id="slot1">?</div>
+  <div class="slot" id="slot2">?</div>
+  <div class="slot" id="slot3">?</div>
+</div>
+
+<button onclick="spin()">SPIN!</button>
+<div id="result"></div>
+
+<script>
+  const icons = ['🍒', '🍋', '🍇', '⭐', '💎'];
+  const slotEls = [
+    document.getElementById('slot1'),
+    document.getElementById('slot2'),
+    document.getElementById('slot3')
+  ];
+  const resultEl = document.getElementById('result');
+
+  function spin() {
+    resultEl.textContent = '';
+    let results = [];
+
+    // Animasi acak dulu
+    let spinInterval = setInterval(() => {
+      slotEls.forEach(slot => {
+        slot.textContent = icons[Math.floor(Math.random() * icons.length)];
+      });
+    }, 100);
+
+    // Setelah 2 detik, hentikan animasi dan pilih final
+    setTimeout(() => {
+      clearInterval(spinInterval);
+      results = slotEls.map(() => icons[Math.floor(Math.random() * icons.length)]);
+      results.forEach((value, i) => slotEls[i].textContent = value);
+
+      // Cek apakah menang
+      if (results[0] === results[1] && results[1] === results[2]) {
+        resultEl.textContent = "KAMU MENANG!";
+        resultEl.style.color = "green";
+      } else {
+        resultEl.textContent = "Coba Lagi...";
+        resultEl.style.color = "red";
+      }
+    }, 2000);
+  }
+</script>
+
+</body>
+</html>
+
